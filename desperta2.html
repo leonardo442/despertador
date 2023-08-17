@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Despertador em JavaScript</title>
+</head>
+<body>
+  <h1>Despertador</h1>
+  
+  <!-- Caixa de seleção para definir a hora do despertador -->
+  <label for="hora">Defina a hora do despertador: </label>
+  <input type="time" id="hora" required>
+  <button id="definirDespertador">Definir Despertador</button>
+
+  <!-- Elemento de áudio oculto para reproduzir o alarme -->
+  <audio id="alarme" preload="auto" src="salamisound-8990324-classic-alarm-clock-goes-off.mp3"></audio>
+  
+  <!-- Botão para parar o alarme, inicialmente oculto -->
+  <button id="pararAlarme" style="display: none;">Parar Alarme</button>
+
+  <script>
+    // Comentário simples de linha
+
+    /**
+     * Comentário de várias linhas
+     * Explicando o objetivo do código
+     */
+    
+    // Vincula um evento de clique ao botão "Definir Despertador"
+    document.getElementById('definirDespertador').addEventListener('click', function() {
+      // Obtém a referência ao elemento de entrada de hora
+      const horaInput = document.getElementById('hora');
+      // Cria uma nova instância da data atual
+      const horaDespertar = new Date();
+      
+      // Divide a hora selecionada em horas e minutos
+      const horaSelecionada = horaInput.value.split(':');
+      // Configura a hora de despertar
+      horaDespertar.setHours(horaSelecionada[0]);
+       // Configura os minutos selecionados
+      horaDespertar.setMinutes(horaSelecionada[1]);
+       // Configura para zerar os segundos
+      horaDespertar.setSeconds(0);
+
+      // Obtém a data e hora atuais
+      const agora = new Date();
+      // Calcula a diferença de tempo entre a hora de despertar e agora
+      const diferencaTempo = horaDespertar - agora;
+
+      // Verifica se a diferença de tempo é positiva (no futuro)
+      if (diferencaTempo > 0) {
+        // Agendamento de uma função após a diferença de tempo
+        setTimeout(function() {
+          // Exibe um alerta para acordar
+          alert('Hora de acordar!');
+
+          // Obtém a referência ao elemento de áudio
+          const alarmeAudio = document.getElementById('alarme');
+          // Inicia a reprodução do som do alarme
+          alarmeAudio.play();
+
+          // Mostra o botão de parar o alarme
+          document.getElementById('pararAlarme').style.display = 'block';
+        }, diferencaTempo);
+      } else {
+        // Se o tempo já passou, aciona o alarme imediatamente
+        alert('Hora de acordar!');
+
+        // Obtém a referência ao elemento de áudio
+        const alarmeAudio = document.getElementById('alarme');
+        // Inicia a reprodução do som do alarme
+        alarmeAudio.play();
+
+        // Mostra o botão de parar o alarme
+        document.getElementById('pararAlarme').style.display = 'block';
+      }
+    });
+
+    // Adiciona um evento para parar o alarme
+    document.getElementById('pararAlarme').addEventListener('click', function() {
+      // Obtém a referência ao elemento de áudio
+      const alarmeAudio = document.getElementById('alarme');
+
+      // Pausa a reprodução do áudio
+      alarmeAudio.pause();
+       // Reiniciar o áudio para o início
+      alarmeAudio.currentTime = 0;
+
+      // Oculta o botão de parar o alarme
+      document.getElementById('pararAlarme').style.display = 'none';
+    });
+  </script>
+</body>
+</html>
